@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="2021-05-20.User_info" author="Edgaras">
+        <sql>
+            create table USER_INFO (
+            ID NUMBER(19, 0) NOT NULL,
+            EMAIL VARCHAR2(255 CHAR) NOT NULL,
+            HASH VARCHAR2(255 CHAR) NOT NULL,
+            PRIMARY KEY (id)
+            );
+        </sql>
+        <sql>
+            CREATE SEQUENCE SEQ_USER_INFO
+            INCREMENT BY 50
+            START WITH 1 ;
+        </sql>
+    </changeSet>
+
+    <changeSet id="2021-05-20.EVENT" author="Edgaras">
+        <sql>
+            create table EVENT (
+            ID NUMBER(19, 0) NOT NULL,
+            NAME VARCHAR2(255 CHAR) NOT NULL,
+            DESCRIPTION VARCHAR2(255 CHAR) NOT NULL,
+            DATE_FROM DATE NOT NULL,
+            DATE_TO DATE NOT NULL,
+            PRIMARY KEY (id)
+            );
+        </sql>
+        <sql>
+            CREATE SEQUENCE SEQ_EVENTS
+            INCREMENT BY 50
+            START WITH 1 ;
+        </sql>
+    </changeSet>
+
+    <changeSet id="2021-05-21.TAG" author="Edgaras">
+        <sql>
+            create table TAG (
+            ID NUMBER(19, 0) NOT NULL,
+            TAG VARCHAR2(255 CHAR) NOT NULL,
+            PRIMARY KEY (ID)
+            );
+        </sql>
+        <sql>
+            CREATE SEQUENCE SEQ_TAGS
+            INCREMENT BY 50
+            START WITH 1 ;
+        </sql>
+    </changeSet>
+
+    <changeSet id="2021-05-21.EVENT_TAG" author="Edgaras">
+        <sql>
+            create table EVENT_TAG
+            (
+            TAG_ID NUMBER(19, 0) NOT NULL,
+            EVENT_ID NUMBER(19, 0) NOT NULL,
+            UNIQUE (TAG_ID,EVENT_ID),
+            CONSTRAINT FK_EVENT_TAG_TAG FOREIGN KEY (TAG_ID) REFERENCES TAG (id),
+            CONSTRAINT FK_EVENT_TAG_EVENT FOREIGN KEY (EVENT_ID) REFERENCES EVENT (id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="2021-05-21.EVENT_USER" author="Edgaras">
+        <sql>
+            create table EVENT_USER
+            (
+            EVENT_ID NUMBER(19, 0) NOT NULL,
+            USER_ID NUMBER(19, 0) NOT NULL,
+            UNIQUE (EVENT_ID,USER_ID),
+            CONSTRAINT FK_EVENT_USER_USER FOREIGN KEY (USER_ID) REFERENCES USER_INFO (id),
+            CONSTRAINT FK_EVENT_USER_EVENT FOREIGN KEY (EVENT_ID) REFERENCES EVENT (id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="2021-05-21.ALTER_EVENT" author="Edgaras">
+        <sql>
+            ALTER TABLE EVENT ADD CREATOR VARCHAR2(255 CHAR)
+        </sql>
+    </changeSet>
+
+    <changeSet id="2021-05-21.ALTER_EVENT_DROP_COLUMN" author="Edgaras">
+        <sql>
+            ALTER TABLE EVENT DROP COLUMN CREATOR
+        </sql>
+    </changeSet>
+
+    <changeSet id="2021-05-21.ALTER_EVENT_ADD_CONSTRAINT" author="Edgaras">
+        <addColumn tableName="event">
+            <column name="CREATOR_ID" type="NUMBER(19,0)">
+                <constraints nullable="false" foreignKeyName="FK_USER_ID" references="USER_INFO(ID)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

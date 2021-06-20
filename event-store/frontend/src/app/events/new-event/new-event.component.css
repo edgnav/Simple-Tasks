@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  width: 60vw;
+  flex-direction: row;
+  font-size: large;
+  flex-wrap: wrap;
+}
+.new-event-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.datesContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.title {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.description {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.tags {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.joinButton {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.create-button {
+  margin-top: 10px;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}

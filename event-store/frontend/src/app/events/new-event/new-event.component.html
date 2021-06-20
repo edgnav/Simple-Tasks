@@ -1,0 +1,150 @@
+<div class="row" *ngIf="eventForm">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <div class="col-xs-12">
+      <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-xs-12 form-group">
+            <label for="name">Name</label>
+            <input
+              name="name"
+              id="name"
+              type="text"
+              formControlName="name"
+              class="form-control"
+            />
+            <div
+              *ngIf="name.invalid && (name.dirty || name.touched)"
+              class="alert alert-danger"
+              style="margin-bottom: 0px"
+            >
+              <div *ngIf="name.errors?.required">* Name is required.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 form-group">
+            <label for="name">Description</label>
+            <input
+              type="text"
+              formControlName="description"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                description.invalid &&
+                (description.dirty || description.touched)
+              "
+              class="alert alert-danger"
+              style="margin-bottom: 0px"
+            >
+              <div *ngIf="description.errors?.required">
+                * Description is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 form-group">
+            <label for="dateFrom">Event starts</label>
+            <input
+              type="datetime-local"
+              formControlName="dateFrom"
+              class="form-control"
+              name="dateFrom"
+              id="dateFrom"
+            />
+            <div
+              *ngIf="dateFrom.invalid && (dateFrom.dirty || dateFrom.touched)"
+              class="alert alert-danger"
+              style="margin-bottom: 10px"
+            >
+              <div *ngIf="dateFrom.errors?.required">
+                * Please fill the date.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 form-group">
+            <label for="dateTo">Event ends</label>
+            <input
+              name="dateTo"
+              id="dateTo"
+              type="datetime-local"
+              formControlName="dateTo"
+              class="form-control"
+            />
+            <div
+              *ngIf="dateTo.invalid && (dateTo.dirty || dateTo.touched)"
+              class="alert alert-danger"
+              style="margin-bottom: 0px"
+            >
+              <div *ngIf="dateTo.errors?.required">* Please fill the date.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12" formArrayName="tags">
+            <label>Tags</label>
+            <div
+              class="row"
+              *ngFor="let tag of tags; let i = index"
+              [formGroupName]="i"
+              style="margin-top: 10px"
+            >
+              <div class="col-xs-8">
+                <input type="text" class="form-control" formControlName="tag" />
+              </div>
+              <div class="col-xs-2">
+                <button class="btn btn-danger" (click)="onDeleteTag(i)">
+                  X
+                </button>
+              </div>
+              <div class="col-xs-8">
+                <div
+                  *ngIf="tag.invalid && (tag.dirty || tag.touched)"
+                  class="alert alert-danger"
+                  style="margin-bottom: 0px"
+                >
+                  <div>* Tag cannot be empty.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <button
+              style="margin-top: 10px"
+              class="btn btn-primary"
+              type="button"
+              (click)="onAddTag()"
+            >
+              Add tag
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 create-button">
+            <button class="btn btn-primary" type="submit">
+              {{ editMode ? "Save" : "Create" }}
+            </button>
+
+            <button
+              (click)="onCancel()"
+              class="btn btn-danger"
+              type="button"
+              style="margin-left: 10px"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
