@@ -1,0 +1,3 @@
+lt\insoft\events\app\EventsAppApplication.class
+lt\insoft\events\app\auth\JwtRequestFilter.class
+lt\insoft\events\app\auth\MyUserDetailsService.class
